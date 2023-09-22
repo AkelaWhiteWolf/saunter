@@ -1,10 +1,6 @@
 import { useAppSelector, useAppDispatch } from 'src/hooks';
 
-import {
-  addPathToSlice,
-  removePathFromSlice,
-  switchIsPathFavoriteInSlice,
-} from 'src/redux';
+import { pathesSlice } from 'src/redux';
 
 import {
   AddPathToSliceType,
@@ -12,10 +8,13 @@ import {
   SwitchIsPathFavoriteInSliceType,
 } from 'src/types';
 
+const { addPathToSlice, removePathFromSlice, switchIsPathFavoriteInSlice } =
+  pathesSlice.actions;
+
 export function useConstructorsBlocks() {
   const dispatch = useAppDispatch();
 
-  const pathesData = useAppSelector(state => state.pathesSliceData.pathes);
+  const pathesData = useAppSelector(state => state.pathesSliceReducer.pathes);
 
   function addPath(data: AddPathToSliceType) {
     dispatch(addPathToSlice(data));

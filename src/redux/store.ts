@@ -1,18 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { pathesSlice } from './slices';
+import { pathesSlice, modalsOpenSlice } from './slices';
 
 const store = configureStore({
   reducer: {
-    pathesSliceData: pathesSlice.reducer,
+    pathesSliceReducer: pathesSlice.reducer,
+    modalsOpenReducer: modalsOpenSlice.reducer,
   },
 });
 
-export const {
-  addPathToSlice,
-  removePathFromSlice,
-  switchIsPathFavoriteInSlice,
-} = pathesSlice.actions;
+export { pathesSlice, modalsOpenSlice };
 
 export { store };
 
