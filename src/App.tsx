@@ -1,5 +1,6 @@
 import React from 'react';
+import { MainPage } from 'src/pages';
 
 export const App: React.FC = () => {
-  return <div>hello world</div>;
+  return <MainPage />;
 };
