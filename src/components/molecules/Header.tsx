@@ -1,7 +1,7 @@
 import React from 'react';
 import { HStack, Text } from '@chakra-ui/react';
 import { PlusSquareIcon } from '@chakra-ui/icons';
-import { OpenAddPathModelButton } from 'src/components';
+import { OpenAddPathModalButton } from 'src/components';
 
 export const Header: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
         <Text>Saunter</Text>
       </HStack>
 
-      <OpenAddPathModelButton />
+      <OpenAddPathModalButton />
     </HStack>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@chakra-ui/react';
 import { useModalsOpenSlice } from 'src/hooks';
 
-export const OpenAddPathModelButton: React.FC = () => {
+export const OpenAddPathModalButton: React.FC = () => {
   const { addPathModal } = useModalsOpenSlice();
 
   return (

@@ -11,7 +11,7 @@ import {
 const { addPathToSlice, removePathFromSlice, switchIsPathFavoriteInSlice } =
   pathesSlice.actions;
 
-export function useConstructorsBlocks() {
+export function usePathesSlice() {
   const dispatch = useAppDispatch();
 
   const pathesData = useAppSelector(state => state.pathesSliceReducer.pathes);
