@@ -17,11 +17,12 @@ import {
   useModalsOpenSlice,
   usePathesSlice,
 } from 'src/hooks';
+import { PathSliceType } from 'src/types';
 
 interface FormValues {
-  title: string;
-  shortDescription?: string;
-  fullDescription?: string;
+  title: PathSliceType['title'];
+  shortDescription?: PathSliceType['shortDescription'];
+  fullDescription?: PathSliceType['fullDescription'];
 }
 
 export const AddPathModal: React.FC = () => {
