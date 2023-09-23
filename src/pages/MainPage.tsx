@@ -4,7 +4,7 @@ import { Header } from 'src/components';
 
 export const MainPage: React.FC = () => {
   return (
-    <Container maxW="container.sm">
+    <Container maxW="container.xl">
       <Header />
     </Container>
   );

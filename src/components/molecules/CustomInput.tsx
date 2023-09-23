@@ -22,7 +22,9 @@ export const CustomInput: React.FC<Props> = ({
     <Box>
       <Text fontSize="2xl">{title}</Text>
       <InputOrTextarea />
-      <Text fontSize="xs">{errorText}</Text>
+      <Text fontSize="xs" color="tomato">
+        {errorText}
+      </Text>
     </Box>
   );
 };

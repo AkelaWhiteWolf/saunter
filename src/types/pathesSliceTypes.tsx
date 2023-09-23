@@ -1,8 +1,8 @@
 export interface PathSliceType {
   id: number;
   title: string;
-  shortDescription: string;
-  fullDescription: string;
+  shortDescription?: string;
+  fullDescription?: string;
   isFavorite?: boolean;
 }
 
