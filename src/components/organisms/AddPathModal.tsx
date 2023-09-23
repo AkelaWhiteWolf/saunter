@@ -30,6 +30,7 @@ export const AddPathModal: React.FC = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<FormValues>();
   const { setMaxLength, fieldRequiredMessage } = useFormValidators();
   const { addPath } = usePathesSlice();
@@ -48,6 +49,7 @@ export const AddPathModal: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormValues> = data => {
     addPath(data);
+    reset();
     close();
   };
 
