@@ -1,5 +1,5 @@
 import React from 'react';
-import { HStack, VStack } from '@chakra-ui/react';
+import { HStack, VStack, StackProps } from '@chakra-ui/react';
 import { AtSignIcon } from '@chakra-ui/icons';
 import {
   PathDistanceText,
@@ -8,16 +8,28 @@ import {
 } from 'src/components';
 import { PathSliceType } from 'src/types';
 
-interface Props {
+type Props = StackProps & {
   title: PathSliceType['title'];
   shortDescription: PathSliceType['shortDescription'];
-}
+};
 
-export const PathListItem: React.FC<Props> = ({ title, shortDescription }) => {
+export const PathListItem: React.FC<Props> = ({
+  title,
+  shortDescription,
+  ...stackProps
+}) => {
   return (
-    <HStack gap="20px">
+    <HStack
+      p="5px"
+      gap="20px"
+      w="100%"
+      maxW="600px"
+      boxShadow="0px 1px 5px 0.25px lightgrey"
+      borderRadius="8px"
+      {...stackProps}
+    >
       <AtSignIcon flex={1} />
-      <VStack gap="8px" flex={4}>
+      <VStack gap="8px" flex={4} alignItems="flex-start">
         <PathTitleText>{title}</PathTitleText>
         <PathShortDescriptionText>{shortDescription}</PathShortDescriptionText>
       </VStack>

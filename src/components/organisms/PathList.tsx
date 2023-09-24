@@ -21,7 +21,7 @@ export const PathList: React.FC = () => {
     <Box>
       <Input onInput={handleSetSearch} />
 
-      <VStack gap="8px">
+      <VStack gap="8px" alignItems="flex-start" maxH="750px" overflowY="auto">
         {renderedPathes.map(path => (
           <PathListItem
             key={path.id}
