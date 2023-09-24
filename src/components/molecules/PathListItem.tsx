@@ -22,7 +22,7 @@ export const PathListItem: React.FC<Props> = ({ title, shortDescription }) => {
         <PathShortDescriptionText>{shortDescription}</PathShortDescriptionText>
       </VStack>
       {/* TODO: add real value */}
-      <PathDistanceText>600 m</PathDistanceText>
+      <PathDistanceText flex={1}>600 m</PathDistanceText>
     </HStack>
   );
 };

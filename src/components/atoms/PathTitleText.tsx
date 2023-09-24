@@ -1,14 +1,14 @@
 import React from 'react';
-import { Text } from '@chakra-ui/react';
+import { Text, TextProps } from '@chakra-ui/react';
 import { PathSliceType } from 'src/types';
 
-interface Props {
+type Props = TextProps & {
   children: PathSliceType['title'];
-}
+};
 
-export const PathTitleText: React.FC<Props> = ({ children }) => {
+export const PathTitleText: React.FC<Props> = ({ children, ...textProps }) => {
   return (
-    <Text fontSize="xl" color="grey" as="b">
+    <Text fontSize="xl" color="grey" as="b" {...textProps}>
       {children}
     </Text>
   );

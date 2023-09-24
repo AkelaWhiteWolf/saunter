@@ -1,13 +1,16 @@
 import React from 'react';
-import { Text } from '@chakra-ui/react';
+import { Text, TextProps } from '@chakra-ui/react';
 
-interface Props {
+type Props = TextProps & {
   children: string;
-}
+};
 
-export const PathDistanceText: React.FC<Props> = ({ children }) => {
+export const PathDistanceText: React.FC<Props> = ({
+  children,
+  ...textProps
+}) => {
   return (
-    <Text fontSize="2xl" color="grey" as="b">
+    <Text fontSize="2xl" color="grey" as="b" {...textProps}>
       {children}
     </Text>
   );
