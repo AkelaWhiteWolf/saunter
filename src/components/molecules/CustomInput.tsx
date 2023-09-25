@@ -19,7 +19,7 @@ export const CustomInput: React.FC<Props> = ({
     type === 'input' ? <Input {...register} /> : <Textarea {...register} />;
 
   return (
-    <Box>
+    <Box w="100%">
       <Text fontSize="2xl">{title}</Text>
       <InputOrTextarea />
       <Text fontSize="xs" color="tomato">

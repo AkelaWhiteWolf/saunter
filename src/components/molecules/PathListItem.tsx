@@ -26,6 +26,7 @@ export const PathListItem: React.FC<Props> = ({
       maxW="600px"
       boxShadow="0px 1px 5px 0.25px lightgrey"
       borderRadius="8px"
+      cursor="pointer"
       {...stackProps}
     >
       <AtSignIcon flex={1} />
