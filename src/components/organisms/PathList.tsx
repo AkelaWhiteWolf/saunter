@@ -1,9 +1,14 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Box, Input, VStack } from '@chakra-ui/react';
 import { usePathesSlice } from 'src/hooks';
-import { PathListItem } from '..';
+import { PathListItem } from 'src/components';
+import { PathSliceType } from 'src/types';
 
-export const PathList: React.FC = () => {
+interface Props {
+  selectPath: (id: PathSliceType['id']) => void;
+}
+
+export const PathList: React.FC<Props> = ({ selectPath }) => {
   const { pathesData } = usePathesSlice();
 
   const [search, setSearch] = useState('');
@@ -27,6 +32,7 @@ export const PathList: React.FC = () => {
             key={path.id}
             title={path.title}
             shortDescription={path.shortDescription}
+            onClick={() => selectPath(path.id)}
           />
         ))}
       </VStack>
