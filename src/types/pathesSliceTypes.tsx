@@ -1,6 +1,6 @@
 export interface PathMarkerType {
-  lat?: number;
-  lng?: number;
+  lat: number;
+  lng: number;
 }
 
 export interface PathSliceType {

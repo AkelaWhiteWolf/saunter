@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -6,18 +6,19 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  HStack,
   VStack,
   FormControl,
+  Box,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AddPathButton, CustomInput } from 'src/components';
+import { AddPathButton, CustomGoogleMap, CustomInput } from 'src/components';
 import {
   useFormValidators,
   useModalsOpenSlice,
   usePathesSlice,
 } from 'src/hooks';
-import { PathSliceType } from 'src/types';
+import { PathMarkerType, PathSliceType } from 'src/types';
 
 interface FormValues {
   title: PathSliceType['title'];
@@ -37,6 +38,8 @@ export const AddPathModal: React.FC = () => {
   const { addPathModal } = useModalsOpenSlice();
   const { isOpen, close } = addPathModal;
 
+  const [markers, setMarkers] = useState<PathMarkerType[]>([]);
+
   const titleRegister = {
     ...register('title', { required: fieldRequiredMessage }),
   };
@@ -47,14 +50,29 @@ export const AddPathModal: React.FC = () => {
     ...register('fullDescription'),
   };
 
-  const onSubmit: SubmitHandler<FormValues> = data => {
-    addPath(data);
-    reset();
+  const setMarker = (marker: PathMarkerType) =>
+    setMarkers([...markers, marker]);
+
+  const removeMarker = (indexToRemove: number) =>
+    setMarkers(markers.filter((_, index) => index !== indexToRemove));
+
+  const closeAndReset = () => {
     close();
+    reset();
+  };
+
+  const onSubmit: SubmitHandler<FormValues> = data => {
+    if (markers.length > 0) {
+      addPath({ ...data, markers });
+      closeAndReset();
+    } else {
+      // FIXME: add alerter to UI.
+      console.error('No markers!');
+    }
   };
 
   return (
-    <Modal size="xl" isOpen={isOpen} onClose={close}>
+    <Modal size="3xl" isOpen={isOpen} onClose={closeAndReset}>
       <ModalOverlay />
 
       <ModalContent>
@@ -62,9 +80,9 @@ export const AddPathModal: React.FC = () => {
         <ModalCloseButton />
 
         <ModalBody>
-          <HStack flex={1}>
+          <SimpleGrid columns={2}>
             <FormControl onSubmit={handleSubmit(onSubmit)}>
-              <VStack>
+              <VStack alignItems="flex-start" p="10px">
                 <CustomInput
                   title="Title"
                   register={titleRegister}
@@ -85,7 +103,15 @@ export const AddPathModal: React.FC = () => {
                 <AddPathButton onClick={handleSubmit(onSubmit)} />
               </VStack>
             </FormControl>
-          </HStack>
+
+            <Box>
+              <CustomGoogleMap
+                setMarker={setMarker}
+                removeMarker={removeMarker}
+                markers={markers}
+              />
+            </Box>
+          </SimpleGrid>
         </ModalBody>
       </ModalContent>
     </Modal>
