@@ -39,6 +39,7 @@ export const AddPathModal: React.FC = () => {
   const { isOpen, close } = addPathModal;
 
   const [markers, setMarkers] = useState<PathMarkerType[]>([]);
+  const [distance, setDistance] = useState<number>(0);
 
   const titleRegister = {
     ...register('title', { required: fieldRequiredMessage }),
@@ -59,15 +60,16 @@ export const AddPathModal: React.FC = () => {
   const closeAndReset = () => {
     close();
     reset();
+    setMarkers([]);
   };
 
   const onSubmit: SubmitHandler<FormValues> = data => {
-    if (markers.length > 0) {
-      addPath({ ...data, markers });
+    if (markers.length > 1) {
+      addPath({ ...data, markers, distance });
       closeAndReset();
     } else {
       // FIXME: add alerter to UI.
-      console.error('No markers!');
+      console.error('Please, create path by two or more markers on map!');
     }
   };
 
@@ -109,6 +111,7 @@ export const AddPathModal: React.FC = () => {
                 setMarker={setMarker}
                 removeMarker={removeMarker}
                 markers={markers}
+                distanceAction={setDistance}
               />
             </Box>
           </SimpleGrid>

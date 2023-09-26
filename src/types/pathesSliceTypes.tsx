@@ -10,6 +10,7 @@ export interface PathSliceType {
   fullDescription?: string;
   isFavorite?: boolean;
   markers: PathMarkerType[];
+  distance: number;
 }
 
 export type AddPathToSliceType = Omit<PathSliceType, 'id' | 'isFavorite'>;

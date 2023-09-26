@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { HStack, VStack, StackProps } from '@chakra-ui/react';
 import { AtSignIcon } from '@chakra-ui/icons';
 import {
@@ -7,17 +7,25 @@ import {
   PathTitleText,
 } from 'src/components';
 import { PathSliceType } from 'src/types';
+import { getDistanceLabelFromMeters } from 'src/utils';
 
 type Props = StackProps & {
   title: PathSliceType['title'];
   shortDescription: PathSliceType['shortDescription'];
+  distance: PathSliceType['distance'];
 };
 
 export const PathListItem: React.FC<Props> = ({
   title,
   shortDescription,
+  distance,
   ...stackProps
 }) => {
+  const distanceLabel = useMemo(
+    () => getDistanceLabelFromMeters(distance),
+    [distance],
+  );
+
   return (
     <HStack
       p="5px"
@@ -34,8 +42,8 @@ export const PathListItem: React.FC<Props> = ({
         <PathTitleText>{title}</PathTitleText>
         <PathShortDescriptionText>{shortDescription}</PathShortDescriptionText>
       </VStack>
-      {/* TODO: add real value */}
-      <PathDistanceText flex={1}>600 m</PathDistanceText>
+
+      <PathDistanceText flex={1}>{distanceLabel}</PathDistanceText>
     </HStack>
   );
 };

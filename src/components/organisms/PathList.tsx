@@ -32,6 +32,7 @@ export const PathList: React.FC<Props> = ({ selectPath }) => {
             key={path.id}
             title={path.title}
             shortDescription={path.shortDescription}
+            distance={path.distance}
             onClick={() => selectPath(path.id)}
           />
         ))}

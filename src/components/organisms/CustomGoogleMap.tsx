@@ -1,11 +1,18 @@
-import React, { useCallback, useRef } from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import React, { useCallback, useState } from 'react';
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  DirectionsService,
+} from '@react-google-maps/api';
 import { CircularProgress } from '@chakra-ui/react';
-import { PathMarkerType } from 'src/types';
+import { PathMarkerType, PathSliceType } from 'src/types';
+import { getSumDistanceFromDirectionsService } from 'src/utils';
 
 interface Props {
   setMarker?: (marker: PathMarkerType) => void;
   removeMarker?: (index: number) => void;
+  distanceAction?: (distance: PathSliceType['distance']) => void;
   markers: PathMarkerType[];
 }
 
@@ -21,7 +28,8 @@ const DEFAULT_CENTER = {
 
 export const CustomGoogleMap: React.FC<Props> = ({
   setMarker = () => {},
-  removeMarker = () => {},
+  removeMarker,
+  distanceAction,
   markers,
 }) => {
   const { isLoaded } = useJsApiLoader({
@@ -29,26 +37,53 @@ export const CustomGoogleMap: React.FC<Props> = ({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_KEY as string,
   });
 
-  const mapRef = useRef<google.maps.Map | null>(null);
+  const [, setMap] = useState<google.maps.Map | null>(null);
 
-  const onLoad = useCallback((map: google.maps.Map) => {
-    mapRef.current = map;
-  }, []);
-  const onUnmount = useCallback(() => {
-    mapRef.current = null;
-  }, []);
+  const onLoad = useCallback(setMap, []);
+  const onUnmount = useCallback(() => setMap(null), []);
+
+  if (!isLoaded) return <CircularProgress />;
 
   const handleSetMarker = (e: google.maps.MapMouseEvent) => {
-    if (e.latLng) {
-      const { lat, lng } = e.latLng;
-      setMarker({ lat: lat(), lng: lng() });
+    if (!setMarker || !e.latLng) return;
+
+    const { lat, lng } = e.latLng;
+    setMarker({ lat: lat(), lng: lng() });
+  };
+  const handleRemoveMarker = (index: number) => {
+    if (!removeMarker) return () => {};
+
+    return () => removeMarker(index);
+  };
+
+  const getDistance = (
+    result: google.maps.DirectionsResult | null,
+    status: google.maps.DirectionsStatus,
+  ) => {
+    if (distanceAction) {
+      if (result && status === 'OK') {
+        const distance = getSumDistanceFromDirectionsService(result);
+        distanceAction(distance);
+      } else {
+        // FIXME: add alerter
+        console.error('Something wrong with Google Maps');
+      }
     }
   };
 
-  return isLoaded ? (
+  const directionServiceOptions: google.maps.DirectionsRequest = {
+    origin: markers[0],
+    destination: markers[markers.length - 1],
+    waypoints: markers
+      .slice(1, markers.length - 1)
+      .map(marker => ({ location: marker, stopover: true })),
+    travelMode: google.maps.TravelMode['WALKING'],
+  };
+
+  return (
     <GoogleMap
       zoom={ZOOM}
-      center={DEFAULT_CENTER}
+      center={markers[0] || DEFAULT_CENTER}
       mapContainerStyle={MAP_CONTAINER_STYLE}
       onLoad={onLoad}
       onUnmount={onUnmount}
@@ -58,11 +93,16 @@ export const CustomGoogleMap: React.FC<Props> = ({
         <Marker
           key={`${marker.lat}${marker.lng}`}
           position={marker}
-          onClick={() => removeMarker(index)}
+          onClick={handleRemoveMarker(index)}
         />
       ))}
+
+      {markers.length > 1 && (
+        <DirectionsService
+          options={directionServiceOptions}
+          callback={getDistance}
+        />
+      )}
     </GoogleMap>
-  ) : (
-    <CircularProgress />
   );
 };
