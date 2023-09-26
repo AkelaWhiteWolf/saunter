@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Box, Input, VStack } from '@chakra-ui/react';
 import { usePathesSlice } from 'src/hooks';
-import { PathListItem } from 'src/components';
+import { NoDataText, PathListItem } from 'src/components';
 import { PathSliceType } from 'src/types';
 
 interface Props {
@@ -23,19 +23,30 @@ export const PathList: React.FC<Props> = ({ selectPath }) => {
     setSearch(e.target.value);
 
   return (
-    <Box>
+    <Box w="100%" h="100%">
       <Input onInput={handleSetSearch} />
 
-      <VStack gap="8px" alignItems="flex-start" maxH="750px" overflowY="auto">
-        {renderedPathes.map(path => (
-          <PathListItem
-            key={path.id}
-            title={path.title}
-            shortDescription={path.shortDescription}
-            distance={path.distance}
-            onClick={() => selectPath(path.id)}
-          />
-        ))}
+      <VStack
+        py="16px"
+        gap="16px"
+        alignItems="flex-start"
+        h="100%"
+        maxH="750px"
+        overflowY="auto"
+      >
+        {renderedPathes.length ? (
+          renderedPathes.map(path => (
+            <PathListItem
+              key={path.id}
+              title={path.title}
+              shortDescription={path.shortDescription}
+              distance={path.distance}
+              onClick={() => selectPath(path.id)}
+            />
+          ))
+        ) : (
+          <NoDataText />
+        )}
       </VStack>
     </Box>
   );

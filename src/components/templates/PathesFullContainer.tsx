@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, HStack } from '@chakra-ui/react';
+import { Container, SimpleGrid } from '@chakra-ui/react';
 import { Header, PathFullInfoBlock, PathList } from 'src/components';
 import { PathSliceType } from 'src/types';
 
@@ -13,12 +13,12 @@ export const PathesFullContainer = () => {
   }
 
   return (
-    <Container maxW="container.xl">
+    <Container maxW="container.xl" h="90%">
       <Header />
-      <HStack>
+      <SimpleGrid columns={2} h="750px">
         <PathList selectPath={handleSelectPath} />
         {selectedPathId && <PathFullInfoBlock id={selectedPathId} />}
-      </HStack>
+      </SimpleGrid>
     </Container>
   );
 };

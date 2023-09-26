@@ -4,11 +4,12 @@ import { Provider } from 'react-redux';
 import { store } from 'src/redux';
 import { MainPage } from 'src/pages';
 import { AllModals } from 'src/components';
+import { theme } from 'src/styles';
 
 export const App: React.FC = () => {
   return (
     <React.StrictMode>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Provider store={store}>
           <MainPage />
           <AllModals />

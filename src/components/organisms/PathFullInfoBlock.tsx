@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Box, VStack } from '@chakra-ui/react';
+import { Box, HStack, VStack } from '@chakra-ui/react';
 import {
   CustomGoogleMap,
   NoDataText,
@@ -20,16 +20,18 @@ export const PathFullInfoBlock: React.FC<Props> = ({ id }) => {
 
   const path = useMemo(() => getPathById(id), [id]);
 
+  console.log({ path });
+
   if (!path) return <NoDataText />;
 
   const distanceLabel = getDistanceLabelFromMeters(path.distance);
 
   return (
     <VStack gap="8px">
-      <VStack justifyContent="space-between">
+      <HStack justifyContent="space-between">
         <PathTitleText>{path.title}</PathTitleText>
         <PathDistanceText>{distanceLabel}</PathDistanceText>
-      </VStack>
+      </HStack>
 
       <PathFullDescriptionText>{path.fullDescription}</PathFullDescriptionText>
       <Box w="400px" h="400px">
