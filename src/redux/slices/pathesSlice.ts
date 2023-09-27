@@ -17,6 +17,12 @@ export const pathesSlice = createSlice({
       });
     },
 
+    addReadyPathesToSlice(state, action: PayloadAction<PathSliceType[]>) {
+      state.pathes = action.payload;
+      const lastPayloadPathId = action.payload.at(-1)?.id;
+      if (lastPayloadPathId) state.availableId = lastPayloadPathId + 1;
+    },
+
     switchIsPathFavoriteInSlice(
       state,
       action: PayloadAction<SwitchIsPathFavoriteInSliceType>,

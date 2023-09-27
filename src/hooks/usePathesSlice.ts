@@ -9,8 +9,12 @@ import {
   SwitchIsPathFavoriteInSliceType,
 } from 'src/types';
 
-const { addPathToSlice, removePathFromSlice, switchIsPathFavoriteInSlice } =
-  pathesSlice.actions;
+const {
+  addPathToSlice,
+  addReadyPathesToSlice,
+  removePathFromSlice,
+  switchIsPathFavoriteInSlice,
+} = pathesSlice.actions;
 
 export function usePathesSlice() {
   const dispatch = useAppDispatch();
@@ -25,6 +29,10 @@ export function usePathesSlice() {
     dispatch(addPathToSlice(data));
   }
 
+  function addReadyPathes(data: PathSliceType[]) {
+    dispatch(addReadyPathesToSlice(data));
+  }
+
   function removePath(data: RemovePathFromSliceType) {
     dispatch(removePathFromSlice(data));
   }
@@ -37,6 +45,7 @@ export function usePathesSlice() {
     pathesData,
     getPathById,
     addPath,
+    addReadyPathes,
     removePath,
     switchIsPathFavorite,
   };
