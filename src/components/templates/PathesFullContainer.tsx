@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Container, SimpleGrid } from '@chakra-ui/react';
 import { Header, PathFullInfoBlock, PathList } from 'src/components';
 import { PathSliceType } from 'src/types';
