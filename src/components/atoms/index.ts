@@ -6,3 +6,4 @@ export * from './PathFullDescriptionText';
 export * from './PathDistanceText';
 export * from './NoDataText';
 export * from './DeletePathButton';
+export * from './SwitchIsPathFavoriteButton';

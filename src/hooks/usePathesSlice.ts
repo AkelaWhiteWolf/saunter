@@ -2,11 +2,7 @@ import { useAppSelector, useAppDispatch } from 'src/hooks';
 
 import { pathesSlice } from 'src/redux';
 
-import {
-  AddPathToSliceType,
-  PathSliceType,
-  SwitchIsPathFavoriteInSliceType,
-} from 'src/types';
+import { AddPathToSliceType, PathSliceType } from 'src/types';
 
 const {
   addPathToSlice,
@@ -39,8 +35,15 @@ export function usePathesSlice() {
     dispatch(removePathFromSlice({ id }));
   }
 
-  function switchIsPathFavorite(data: SwitchIsPathFavoriteInSliceType) {
-    dispatch(switchIsPathFavoriteInSlice(data));
+  function switchIsPathFavorite(id: PathSliceType['id']) {
+    dispatch(switchIsPathFavoriteInSlice({ id }));
+  }
+
+  function getSortedPathes() {
+    const favorites = pathesData.filter(path => path.isFavorite);
+    const notFavorites = pathesData.filter(path => !path.isFavorite);
+
+    return [...favorites, ...notFavorites];
   }
 
   return {
@@ -51,5 +54,6 @@ export function usePathesSlice() {
     addReadyPathes,
     deletePath,
     switchIsPathFavorite,
+    getSortedPathes,
   };
 }

@@ -9,11 +9,11 @@ interface Props {
 }
 
 export const PathList: React.FC<Props> = ({ selectPath }) => {
-  const { pathesData } = usePathesSlice();
+  const { getSortedPathes } = usePathesSlice();
 
   const [search, setSearch] = useState('');
 
-  const renderedPathes = pathesData.filter(
+  const pathesBySearch = getSortedPathes().filter(
     ({ title, shortDescription }) =>
       title.toLowerCase().includes(search.toLowerCase()) ||
       shortDescription?.toLowerCase().includes(search.toLowerCase()),
@@ -34,13 +34,14 @@ export const PathList: React.FC<Props> = ({ selectPath }) => {
         maxH="750px"
         overflowY="auto"
       >
-        {renderedPathes.length ? (
-          renderedPathes.map(path => (
+        {pathesBySearch.length ? (
+          pathesBySearch.map(path => (
             <PathListItem
               key={path.id}
               title={path.title}
               shortDescription={path.shortDescription}
               distance={path.distance}
+              isFavorite={path.isFavorite}
               onClick={() => selectPath(path.id)}
             />
           ))

@@ -6,6 +6,7 @@ import {
   deleteDoc,
   where,
   query,
+  updateDoc,
 } from 'firebase/firestore';
 import { PathSliceType } from 'src/types';
 
@@ -32,15 +33,33 @@ export const useFirestoreDB = () => {
   async function deletePathFromDB(id: PathSliceType['id']) {
     const path = await getPathFromDBById(id);
 
-    if (path) await deleteDoc(path);
+    if (path?.ref) await deleteDoc(path?.ref);
+  }
+
+  async function switchIsPathFavoriteInDB(id: PathSliceType['id']) {
+    const path = await getPathFromDBById(id);
+
+    if (path) {
+      const newValue = !path?.data.isFavorite;
+      await updateDoc(path.ref, { isFavorite: newValue });
+    }
   }
 
   async function getPathFromDBById(id: PathSliceType['id']) {
     const pathQuery = query(collection(db, 'pathes'), where('id', '==', id));
     const querySnapshot = await getDocs(pathQuery);
 
-    if (!querySnapshot.empty) return querySnapshot.docs[0].ref;
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+
+      return { ref: doc.ref, data: doc.data() };
+    }
   }
 
-  return { getPathesFromDB, addPathToDB, deletePathFromDB };
+  return {
+    getPathesFromDB,
+    addPathToDB,
+    deletePathFromDB,
+    switchIsPathFavoriteInDB,
+  };
 };

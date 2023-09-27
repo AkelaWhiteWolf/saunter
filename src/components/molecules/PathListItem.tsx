@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { HStack, VStack, StackProps } from '@chakra-ui/react';
-import { AtSignIcon } from '@chakra-ui/icons';
+import { AtSignIcon, StarIcon } from '@chakra-ui/icons';
 import {
   PathDistanceText,
   PathShortDescriptionText,
@@ -13,12 +13,14 @@ type Props = StackProps & {
   title: PathSliceType['title'];
   shortDescription: PathSliceType['shortDescription'];
   distance: PathSliceType['distance'];
+  isFavorite?: boolean;
 };
 
 export const PathListItem: React.FC<Props> = ({
   title,
   shortDescription,
   distance,
+  isFavorite,
   ...stackProps
 }) => {
   const distanceLabel = useMemo(
@@ -39,7 +41,10 @@ export const PathListItem: React.FC<Props> = ({
     >
       <AtSignIcon flex={1} />
       <VStack gap="8px" flex={4} alignItems="flex-start">
-        <PathTitleText>{title}</PathTitleText>
+        <HStack gap="4px">
+          {isFavorite && <StarIcon color="cyan" />}
+          <PathTitleText>{title}</PathTitleText>
+        </HStack>
         <PathShortDescriptionText>{shortDescription}</PathShortDescriptionText>
       </VStack>
 

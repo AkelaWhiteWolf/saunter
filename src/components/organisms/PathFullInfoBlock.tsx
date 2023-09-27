@@ -7,6 +7,7 @@ import {
   PathDistanceText,
   PathFullDescriptionText,
   PathTitleText,
+  SwitchIsPathFavoriteButton,
 } from 'src/components';
 import { usePathesSlice } from 'src/hooks';
 import { PathSliceType } from 'src/types';
@@ -30,8 +31,9 @@ export const PathFullInfoBlock: React.FC<Props> = ({ id }) => {
   const deletePathCallback = () => setPath(undefined);
 
   return (
-    <VStack gap="8px" maxW="100%" overflowY="auto">
-      <HStack gap="20px" justifyContent="flex-end">
+    <VStack gap="8px" w="100%" overflowY="auto">
+      <HStack gap="20px" w="100%" justifyContent="flex-end">
+        <SwitchIsPathFavoriteButton pathId={id} />
         <DeletePathButton pathId={id} callback={deletePathCallback} />
       </HStack>
       <HStack w="100%" justifyContent="space-between">
