@@ -5,3 +5,4 @@ export * from './PathShortDescriptionText';
 export * from './PathFullDescriptionText';
 export * from './PathDistanceText';
 export * from './NoDataText';
+export * from './DeletePathButton';

@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, HStack, VStack } from '@chakra-ui/react';
 import {
   CustomGoogleMap,
+  DeletePathButton,
   NoDataText,
   PathDistanceText,
   PathFullDescriptionText,
@@ -18,17 +19,22 @@ interface Props {
 export const PathFullInfoBlock: React.FC<Props> = ({ id }) => {
   const { getPathById } = usePathesSlice();
 
-  const path = useMemo(() => getPathById(id), [id]);
+  const [path, setPath] = useState(() => getPathById(id));
 
-  console.log({ path });
+  useEffect(() => setPath(getPathById(id)), [id]);
 
   if (!path) return <NoDataText />;
 
   const distanceLabel = getDistanceLabelFromMeters(path.distance);
 
+  const deletePathCallback = () => setPath(undefined);
+
   return (
-    <VStack gap="8px">
-      <HStack justifyContent="space-between">
+    <VStack gap="8px" maxW="100%" overflowY="auto">
+      <HStack gap="20px" justifyContent="flex-end">
+        <DeletePathButton pathId={id} callback={deletePathCallback} />
+      </HStack>
+      <HStack w="100%" justifyContent="space-between">
         <PathTitleText>{path.title}</PathTitleText>
         <PathDistanceText>{distanceLabel}</PathDistanceText>
       </HStack>

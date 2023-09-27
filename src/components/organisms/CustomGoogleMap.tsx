@@ -37,7 +37,7 @@ export const CustomGoogleMap: React.FC<Props> = ({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_KEY as string,
   });
 
-  const [, setMap] = useState<google.maps.Map | null>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
 
   const onLoad = useCallback(setMap, []);
   const onUnmount = useCallback(() => setMap(null), []);
@@ -89,13 +89,14 @@ export const CustomGoogleMap: React.FC<Props> = ({
       onUnmount={onUnmount}
       onClick={handleSetMarker}
     >
-      {markers.map((marker, index) => (
-        <Marker
-          key={`${marker.lat}${marker.lng}`}
-          position={marker}
-          onClick={handleRemoveMarker(index)}
-        />
-      ))}
+      {map &&
+        markers.map((marker, index) => (
+          <Marker
+            key={`${marker.lat}${marker.lng}`}
+            position={marker}
+            onClick={handleRemoveMarker(index)}
+          />
+        ))}
 
       {markers.length > 1 && (
         <DirectionsService

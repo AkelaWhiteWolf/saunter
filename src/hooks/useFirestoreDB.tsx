@@ -1,5 +1,12 @@
 import { db } from 'src/config';
-import { getDocs, collection, addDoc } from 'firebase/firestore';
+import {
+  getDocs,
+  collection,
+  addDoc,
+  deleteDoc,
+  where,
+  query,
+} from 'firebase/firestore';
 import { PathSliceType } from 'src/types';
 
 export const useFirestoreDB = () => {
@@ -22,5 +29,18 @@ export const useFirestoreDB = () => {
     await addDoc(collection(db, 'pathes'), data);
   }
 
-  return { getPathesFromDB, addPathToDB };
+  async function deletePathFromDB(id: PathSliceType['id']) {
+    const path = await getPathFromDBById(id);
+
+    if (path) await deleteDoc(path);
+  }
+
+  async function getPathFromDBById(id: PathSliceType['id']) {
+    const pathQuery = query(collection(db, 'pathes'), where('id', '==', id));
+    const querySnapshot = await getDocs(pathQuery);
+
+    if (!querySnapshot.empty) return querySnapshot.docs[0].ref;
+  }
+
+  return { getPathesFromDB, addPathToDB, deletePathFromDB };
 };
