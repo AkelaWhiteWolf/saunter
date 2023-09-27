@@ -9,7 +9,6 @@ export const MainPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const dbPathes = await getPathesFromDB();
-      console.log('dbPathes', dbPathes);
       if (dbPathes?.length) {
         addReadyPathes(dbPathes);
       }
