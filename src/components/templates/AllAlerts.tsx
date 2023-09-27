@@ -10,7 +10,6 @@ import { useAlertsSlice } from 'src/hooks';
 
 export const AllAlerts: React.FC = () => {
   const { alerts } = useAlertsSlice();
-  console.log('alerts in AllAlerts', alerts);
 
   return alerts.length ? (
     <VStack spacing={3} alignItems="center">

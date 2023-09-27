@@ -23,8 +23,6 @@ export function useAlertsSlice() {
 
   function deleteAlert(id: AlertDataType['id']) {
     dispatch(deleteAlertFromSlice({ id }));
-    // debugger;
-    console.log('alerts', alerts);
   }
 
   return {

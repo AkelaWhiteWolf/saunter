@@ -8,6 +8,7 @@ import {
 import { CircularProgress } from '@chakra-ui/react';
 import { PathMarkerType, PathSliceType } from 'src/types';
 import { getSumDistanceFromDirectionsService } from 'src/utils';
+import { useAlertsSlice } from 'src/hooks';
 
 interface Props {
   setMarker?: (marker: PathMarkerType) => void;
@@ -42,6 +43,8 @@ export const CustomGoogleMap: React.FC<Props> = ({
   const onLoad = useCallback(setMap, []);
   const onUnmount = useCallback(() => setMap(null), []);
 
+  const { addAlert } = useAlertsSlice();
+
   if (!isLoaded) return <CircularProgress />;
 
   const handleSetMarker = (e: google.maps.MapMouseEvent) => {
@@ -65,8 +68,10 @@ export const CustomGoogleMap: React.FC<Props> = ({
         const distance = getSumDistanceFromDirectionsService(result);
         distanceAction(distance);
       } else {
-        // FIXME: add alerter
-        console.error('Something wrong with Google Maps');
+        addAlert({
+          status: 'error',
+          title: 'Something wrong with Google Maps',
+        });
       }
     }
   };

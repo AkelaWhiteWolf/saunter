@@ -18,6 +18,7 @@ import {
   useFormValidators,
   useModalsOpenSlice,
   usePathesSlice,
+  useAlertsSlice,
 } from 'src/hooks';
 import { PathMarkerType, PathSliceType } from 'src/types';
 
@@ -37,6 +38,7 @@ export const AddPathModal: React.FC = () => {
   const { setMaxLength, fieldRequiredMessage } = useFormValidators();
   const { addPath, availableId } = usePathesSlice();
   const { addPathToDB } = useFirestoreDB();
+  const { addAlert } = useAlertsSlice();
   const { addPathModal } = useModalsOpenSlice();
   const { isOpen, close } = addPathModal;
 
@@ -74,8 +76,10 @@ export const AddPathModal: React.FC = () => {
       addPath({ ...data, markers, distance });
       closeAndReset();
     } else {
-      // FIXME: add alerter to UI.
-      console.error('Please, create path by two or more markers on map!');
+      addAlert({
+        status: 'error',
+        title: 'Please, create path by two or more markers on map!',
+      });
     }
   };
 

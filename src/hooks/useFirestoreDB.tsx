@@ -9,8 +9,11 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { PathSliceType } from 'src/types';
+import { useAlertsSlice } from 'src/hooks';
 
 export const useFirestoreDB = () => {
+  const { addAlert } = useAlertsSlice();
+
   async function getPathesFromDB() {
     try {
       const data = await getDocs(collection(db, 'pathes'));
@@ -21,8 +24,14 @@ export const useFirestoreDB = () => {
       }));
 
       return mapedData;
-    } catch (e) {
-      console.error('Database error: ', e);
+    } catch (error) {
+      console.error('Database error: ', error);
+
+      addAlert({
+        status: 'error',
+        title: 'Database error:',
+        description: error as string,
+      });
     }
   }
 
