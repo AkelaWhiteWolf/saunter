@@ -14,6 +14,7 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AddPathButton, CustomGoogleMap, CustomInput } from 'src/components';
 import {
+  useFirestoreDB,
   useFormValidators,
   useModalsOpenSlice,
   usePathesSlice,
@@ -34,7 +35,8 @@ export const AddPathModal: React.FC = () => {
     reset,
   } = useForm<FormValues>();
   const { setMaxLength, fieldRequiredMessage } = useFormValidators();
-  const { addPath } = usePathesSlice();
+  const { addPath, availableId } = usePathesSlice();
+  const { addPathToDB } = useFirestoreDB();
   const { addPathModal } = useModalsOpenSlice();
   const { isOpen, close } = addPathModal;
 
@@ -65,6 +67,7 @@ export const AddPathModal: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormValues> = data => {
     if (markers.length > 1) {
+      addPathToDB({ ...data, markers, distance, id: availableId });
       addPath({ ...data, markers, distance });
       closeAndReset();
     } else {

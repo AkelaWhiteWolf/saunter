@@ -20,6 +20,9 @@ export function usePathesSlice() {
   const dispatch = useAppDispatch();
 
   const pathesData = useAppSelector(state => state.pathesSliceReducer.pathes);
+  const availableId = useAppSelector(
+    state => state.pathesSliceReducer.availableId,
+  );
 
   function getPathById(id: PathSliceType['id']) {
     return pathesData.find(path => path.id === id);
@@ -43,6 +46,7 @@ export function usePathesSlice() {
 
   return {
     pathesData,
+    availableId,
     getPathById,
     addPath,
     addReadyPathes,
