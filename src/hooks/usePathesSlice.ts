@@ -5,7 +5,6 @@ import { pathesSlice } from 'src/redux';
 import {
   AddPathToSliceType,
   PathSliceType,
-  RemovePathFromSliceType,
   SwitchIsPathFavoriteInSliceType,
 } from 'src/types';
 
@@ -36,8 +35,8 @@ export function usePathesSlice() {
     dispatch(addReadyPathesToSlice(data));
   }
 
-  function removePath(data: RemovePathFromSliceType) {
-    dispatch(removePathFromSlice(data));
+  function deletePath(id: PathSliceType['id']) {
+    dispatch(removePathFromSlice({ id }));
   }
 
   function switchIsPathFavorite(data: SwitchIsPathFavoriteInSliceType) {
@@ -50,7 +49,7 @@ export function usePathesSlice() {
     getPathById,
     addPath,
     addReadyPathes,
-    removePath,
+    deletePath,
     switchIsPathFavorite,
   };
 }
