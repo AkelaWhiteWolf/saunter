@@ -22,8 +22,8 @@ const MAP_CONTAINER_STYLE = {
 };
 const ZOOM = 10;
 const DEFAULT_CENTER = {
-  lat: -3.745,
-  lng: -38.523,
+  lat: 48.46717456777457,
+  lng: 35.04862502647573,
 };
 
 export const CustomGoogleMap: React.FC<Props> = ({

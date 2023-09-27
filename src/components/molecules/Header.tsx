@@ -7,8 +7,8 @@ export const Header: React.FC = () => {
   return (
     <HStack justifyContent="space-between">
       <HStack gap="20px">
-        <PlusSquareIcon />
-        <Text>Saunter</Text>
+        <PlusSquareIcon boxSize="45px" />
+        <Text fontSize="3xl">Saunter</Text>
       </HStack>
 
       <OpenAddPathModalButton />

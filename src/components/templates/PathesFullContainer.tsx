@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, SimpleGrid } from '@chakra-ui/react';
+import { Box, Container, SimpleGrid } from '@chakra-ui/react';
 import { Header, PathFullInfoBlock, PathList } from 'src/components';
 import { PathSliceType } from 'src/types';
 
@@ -13,11 +13,31 @@ export const PathesFullContainer = () => {
   }
 
   return (
-    <Container maxW="container.xl" h="90%">
+    <Container maxW="container.xl" h="750px">
       <Header />
-      <SimpleGrid columns={2} h="750px">
-        <PathList selectPath={handleSelectPath} />
-        {selectedPathId && <PathFullInfoBlock id={selectedPathId} />}
+      <SimpleGrid
+        columns={2}
+        h="100%"
+        bg="lightgrey"
+        mt="20px"
+        borderRadius="15px"
+      >
+        <Box
+          h="100%"
+          p="15px"
+          borderRight="1px solid lightgrey"
+          overflowY="auto"
+        >
+          <PathList
+            selectPath={handleSelectPath}
+            selectedPathId={selectedPathId}
+          />
+        </Box>
+        {selectedPathId && (
+          <Box h="100%" p="15px" overflowY="auto">
+            <PathFullInfoBlock id={selectedPathId} />
+          </Box>
+        )}
       </SimpleGrid>
     </Container>
   );

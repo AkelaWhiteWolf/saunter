@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { PathesFullContainer } from 'src/components';
 import { useFirestoreDB, usePathesSlice } from 'src/hooks';
@@ -17,5 +18,9 @@ export const MainPage: React.FC = () => {
     fetchData();
   }, []);
 
-  return <PathesFullContainer />;
+  return (
+    <Box mt="20px">
+      <PathesFullContainer />
+    </Box>
+  );
 };

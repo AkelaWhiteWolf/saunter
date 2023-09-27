@@ -44,7 +44,10 @@ export const AddPathModal: React.FC = () => {
   const [distance, setDistance] = useState<number>(0);
 
   const titleRegister = {
-    ...register('title', { required: fieldRequiredMessage }),
+    ...register('title', {
+      required: fieldRequiredMessage,
+      maxLength: setMaxLength(30),
+    }),
   };
   const shortDescriptionRegister = {
     ...register('shortDescription', { maxLength: setMaxLength(160) }),
